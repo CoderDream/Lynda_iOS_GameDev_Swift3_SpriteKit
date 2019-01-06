@@ -11,14 +11,23 @@ import GameplayKit
 
 class GameScene: SKScene {
     
+    var guy:SKSpriteNode?
+    var platform:SKSpriteNode?
     
     override func didMove(to view: SKView) {
-        view.showsPhysics = true
+        guy = self.childNode(withName: "guy") as? SKSpriteNode
+        platform = self.childNode(withName: "platform") as? SKSpriteNode
     }
     
-    
     func touchDown(atPoint pos : CGPoint) {
-
+        jump()
+    }
+    
+    func jump() {
+        // 修改图片
+        guy?.texture = SKTexture(imageNamed: "guy_2")
+        // 垂直向上跳500点
+        guy?.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 500))
     }
     
     func touchMoved(toPoint pos : CGPoint) {
@@ -49,5 +58,7 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+        platform?.physicsBody?.applyForce(CGVector(dx: -30, dy: 0))
+        //platform?.physicsBody?.velocity
     }
 }
